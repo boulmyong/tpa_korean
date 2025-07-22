@@ -1,0 +1,34 @@
+name: TPASystem
+version: 1.0
+main: com.tpasystem.TPASystem
+api-version: 1.21
+commands:
+  tpa:
+    description: Sends a teleport request to a player.
+    usage: /tpa <player>
+    permission: tpa.request
+  tpaccept:
+    description: Accepts a teleport request.
+    usage: /tpaccept
+    permission: tpa.accept
+  tpdeny:
+    description: Denies a teleport request.
+    usage: /tpdeny
+    permission: tpa.deny
+  tpcancel:
+    description: Cancels a teleport request.
+    usage: /tpcancel
+    permission: tpa.cancel
+permissions:
+  tpa.request:
+    description: Allows sending TPA requests.
+    default: true
+  tpa.accept:
+    description: Allows accepting TPA requests.
+    default: true
+  tpa.deny:
+    description: Allows denying TPA requests.
+    default: true
+  tpa.cancel:
+    description: Allows canceling TPA requests.
+    default: true

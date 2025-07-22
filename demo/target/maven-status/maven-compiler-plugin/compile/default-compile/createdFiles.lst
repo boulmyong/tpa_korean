@@ -1,0 +1,10 @@
+com\tpasystem\TPARequest.class
+com\tpasystem\TPACommand.class
+com\tpasystem\PlayerJoinListener.class
+com\tpasystem\TPAcceptCommand$1.class
+com\tpasystem\TPADenyCommand.class
+com\tpasystem\TPAManager.class
+com\tpasystem\TPASystem.class
+com\tpasystem\TPACancelCommand.class
+com\tpasystem\TPAManager$1.class
+com\tpasystem\TPAcceptCommand.class
