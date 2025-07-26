@@ -4,31 +4,31 @@ main: com.tpasystem.TPASystem
 api-version: 1.21
 commands:
   tpa:
-    description: Sends a teleport request to a player.
+    description: 다른 플레이어에게 텔레포트 요청을 보냅니다.
     usage: /tpa <player>
-    permission: tpa.request
+    permission: tpasystem.tpa
   tpaccept:
-    description: Accepts a teleport request.
-    usage: /tpaccept
-    permission: tpa.accept
+    description: 받은 텔레포트 요청을 수락합니다.
+    usage: /tpaccept <player>
+    permission: tpasystem.tpaccept
   tpdeny:
-    description: Denies a teleport request.
-    usage: /tpdeny
-    permission: tpa.deny
+    description: 받은 텔레포트 요청을 거절합니다.
+    usage: /tpdeny <player>
+    permission: tpasystem.tpdeny
   tpcancel:
-    description: Cancels a teleport request.
+    description: 보낸 텔레포트 요청을 취소합니다.
     usage: /tpcancel
-    permission: tpa.cancel
+    permission: tpasystem.tpcancel
 permissions:
-  tpa.request:
-    description: Allows sending TPA requests.
+  tpasystem.tpa:
+    description: /tpa 명령어 사용 권한
     default: true
-  tpa.accept:
-    description: Allows accepting TPA requests.
+  tpasystem.tpaccept:
+    description: /tpaccept 명령어 사용 권한
     default: true
-  tpa.deny:
-    description: Allows denying TPA requests.
+  tpasystem.tpdeny:
+    description: /tpdeny 명령어 사용 권한
     default: true
-  tpa.cancel:
-    description: Allows canceling TPA requests.
+  tpasystem.tpcancel:
+    description: /tpcancel 명령어 사용 권한
     default: true

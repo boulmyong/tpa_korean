@@ -21,6 +21,11 @@ public class TPACancelCommand implements CommandExecutor {
             return true;
         }
 
+        if (args.length != 0) {
+            sender.sendMessage(ChatColor.RED + "사용법: /tpcancel");
+            return true;
+        }
+
         Player requester = (Player) sender;
         TPAManager tpaManager = plugin.getTpaManager();
         TPARequest requestToCancel = null;
@@ -43,7 +48,7 @@ public class TPACancelCommand implements CommandExecutor {
         }
 
         requester.sendMessage(ChatColor.GREEN + "[TPA] " + ChatColor.WHITE + "텔레포트 요청을 취소했습니다.");
-        tpaManager.removeRequest(target.getUniqueId());
+        tpaManager.removeRequest(requestToCancel.getTarget().getUniqueId());
 
         return true;
     }

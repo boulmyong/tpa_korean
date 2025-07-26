@@ -54,10 +54,10 @@ public class TPAManager {
                         Player requester = request.getRequester();
                         Player target = request.getTarget();
                         if (requester != null && requester.isOnline()) {
-                            requester.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + target.getName() + "님에게 보낸 텔레포트 요청이 만료되었습니다.");
+                            requester.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + (target != null ? target.getName() : "알 수 없는 플레이어") + "님에게 보낸 텔레포트 요청이 만료되었습니다.");
                         }
                         if (target != null && target.isOnline()) {
-                            target.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + requester.getName() + "님에게 받은 텔레포트 요청이 만료되었습니다.");
+                            target.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + (requester != null ? requester.getName() : "알 수 없는 플레이어") + "님에게 받은 텔레포트 요청이 만료되었습니다.");
                         }
                         return true;
                     }

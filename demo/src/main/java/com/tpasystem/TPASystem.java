@@ -11,8 +11,11 @@ public class TPASystem extends JavaPlugin {
         tpaManager = new TPAManager(this);
         getLogger().info("TPASystem has been enabled!");
         getCommand("tpa").setExecutor(new TPACommand(this));
+        getCommand("tpa").setTabCompleter(new TPATabCompleter(this));
         getCommand("tpaccept").setExecutor(new TPAcceptCommand(this));
+        getCommand("tpaccept").setTabCompleter(new TPATabCompleter(this));
         getCommand("tpdeny").setExecutor(new TPADenyCommand(this));
+        getCommand("tpdeny").setTabCompleter(new TPATabCompleter(this));
         getCommand("tpcancel").setExecutor(new TPACancelCommand(this));
     }
 

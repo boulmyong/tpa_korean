@@ -25,6 +25,15 @@ public class TPACommand implements CommandExecutor {
             return true;
         }
 
+        if (args.length == 0) {
+            sender.sendMessage(ChatColor.GREEN + "--- TPASystem 도움말 ---");
+            sender.sendMessage(ChatColor.AQUA + "/tpa <player>" + ChatColor.WHITE + " - 다른 플레이어에게 텔레포트 요청을 보냅니다.");
+            sender.sendMessage(ChatColor.AQUA + "/tpaccept <player>" + ChatColor.WHITE + " - 받은 텔레포트 요청을 수락합니다.");
+            sender.sendMessage(ChatColor.AQUA + "/tpdeny <player>" + ChatColor.WHITE + " - 받은 텔레포트 요청을 거절합니다.");
+            sender.sendMessage(ChatColor.AQUA + "/tpcancel" + ChatColor.WHITE + " - 보낸 텔레포트 요청을 취소합니다.");
+            return true;
+        }
+
         if (args.length != 1) {
             sender.sendMessage(ChatColor.RED + "사용법: /tpa <플레이어>");
             return false;
@@ -61,11 +70,11 @@ public class TPACommand implements CommandExecutor {
 
         TextComponent message = new TextComponent(ChatColor.GREEN + "[TPA] " + ChatColor.WHITE + requester.getName() + "님이 당신에게 텔레포트를 요청했습니다. ");
         TextComponent acceptButton = new TextComponent(ChatColor.GREEN + "" + ChatColor.BOLD + "[✔️ 수락]");
-        acceptButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept"));
+        acceptButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + requester.getName()));
         acceptButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("클릭하여 텔레포트 요청을 수락합니다.")));
 
         TextComponent denyButton = new TextComponent(ChatColor.RED + "" + ChatColor.BOLD + "[❌ 거절]");
-        denyButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpdeny"));
+        denyButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpdeny " + requester.getName()));
         denyButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("클릭하여 텔레포트 요청을 거절합니다.")));
         
         TextComponent space = new TextComponent(" ");

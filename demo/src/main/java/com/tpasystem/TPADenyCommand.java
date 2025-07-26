@@ -22,15 +22,25 @@ public class TPADenyCommand implements CommandExecutor {
         }
 
         Player target = (Player) sender;
-        TPAManager tpaManager = plugin.getTpaManager();
-        TPARequest tpaRequest = tpaManager.getRequest(target.getUniqueId());
-
-        if (tpaRequest == null) {
-            target.sendMessage(ChatColor.RED + "받은 텔레포트 요청이 없습니다.");
+        if (args.length != 1) {
+            target.sendMessage(ChatColor.RED + "사용법: /tpdeny <플레이어>");
             return true;
         }
 
-        Player requester = tpaRequest.getRequester();
+        Player requester = plugin.getServer().getPlayer(args[0]);
+        if (requester == null) {
+            target.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
+            return true;
+        }
+
+        TPAManager tpaManager = plugin.getTpaManager();
+        TPARequest tpaRequest = tpaManager.getRequest(target.getUniqueId());
+
+        if (tpaRequest == null || !tpaRequest.getRequester().equals(requester)) {
+            target.sendMessage(ChatColor.RED + requester.getName() + "님에게 받은 텔레포트 요청이 없습니다.");
+            return true;
+        }
+
         if (requester != null && requester.isOnline()) {
             requester.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + target.getName() + "님이 텔레포트 요청을 거절했습니다.");
         }

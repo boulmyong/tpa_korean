@@ -24,15 +24,25 @@ public class TPAcceptCommand implements CommandExecutor {
         }
 
         Player target = (Player) sender;
-        TPAManager tpaManager = plugin.getTpaManager();
-        TPARequest tpaRequest = tpaManager.getRequest(target.getUniqueId());
-
-        if (tpaRequest == null) {
-            target.sendMessage(ChatColor.RED + "받은 텔레포트 요청이 없습니다.");
+        if (args.length != 1) {
+            target.sendMessage(ChatColor.RED + "사용법: /tpaccept <플레이어>");
             return true;
         }
 
-        Player requester = tpaRequest.getRequester();
+        Player requester = plugin.getServer().getPlayer(args[0]);
+        if (requester == null) {
+            target.sendMessage(ChatColor.RED + "플레이어를 찾을 수 없습니다.");
+            return true;
+        }
+
+        TPAManager tpaManager = plugin.getTpaManager();
+        TPARequest tpaRequest = tpaManager.getRequest(target.getUniqueId());
+
+        if (tpaRequest == null || !tpaRequest.getRequester().equals(requester)) {
+            target.sendMessage(ChatColor.RED + requester.getName() + "님에게 받은 텔레포트 요청이 없습니다.");
+            return true;
+        }
+
         if (requester == null || !requester.isOnline()) {
             target.sendMessage(ChatColor.RED + "요청을 보낸 플레이어가 오프라인 상태입니다.");
             tpaManager.removeRequest(target.getUniqueId());
@@ -55,9 +65,9 @@ public class TPAcceptCommand implements CommandExecutor {
                     return;
                 }
 
-                if (requester.getLocation().distanceSquared(initialLocation) > 1) {
-                    requester.sendMessage(ChatColor.RED + "움직여서 텔레포트가 취소되었습니다.");
-                    target.sendMessage(ChatColor.RED + requester.getName() + "님이 움직여서 텔레포트가 취소되었습니다.");
+                if (initialLocation.getWorld() != requester.getWorld() || requester.getLocation().distanceSquared(initialLocation) > 4) {
+                    requester.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + "움직여서 텔레포트가 취소되었습니다.");
+                    target.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + requester.getName() + "님이 움직여서 텔레포트가 취소되었습니다.");
                     tpaManager.removeRequest(target.getUniqueId());
                     cancel();
                     return;
