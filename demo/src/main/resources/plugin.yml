@@ -1,5 +1,5 @@
 name: TPASystem
-version: 1.0
+version: 1.2
 main: com.tpasystem.TPASystem
 api-version: 1.21
 commands:

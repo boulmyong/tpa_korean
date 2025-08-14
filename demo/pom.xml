@@ -5,7 +5,7 @@
 
     <groupId>com.yourname.tpasystem</groupId>
     <artifactId>TPASystem</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>TPASystem</name>

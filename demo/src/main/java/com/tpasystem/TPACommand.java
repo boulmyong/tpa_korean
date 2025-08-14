@@ -69,11 +69,11 @@ public class TPACommand implements CommandExecutor {
         requester.sendMessage(ChatColor.GREEN + "[TPA] " + ChatColor.WHITE + target.getName() + "님에게 텔레포트 요청을 보냈습니다.");
 
         TextComponent message = new TextComponent(ChatColor.GREEN + "[TPA] " + ChatColor.WHITE + requester.getName() + "님이 당신에게 텔레포트를 요청했습니다. ");
-        TextComponent acceptButton = new TextComponent(ChatColor.GREEN + "" + ChatColor.BOLD + "[✔️ 수락]");
+        TextComponent acceptButton = new TextComponent(ChatColor.GREEN + "" + ChatColor.BOLD + "[수락]");
         acceptButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + requester.getName()));
         acceptButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("클릭하여 텔레포트 요청을 수락합니다.")));
 
-        TextComponent denyButton = new TextComponent(ChatColor.RED + "" + ChatColor.BOLD + "[❌ 거절]");
+        TextComponent denyButton = new TextComponent(ChatColor.RED + "" + ChatColor.BOLD + "[거절]");
         denyButton.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpdeny " + requester.getName()));
         denyButton.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("클릭하여 텔레포트 요청을 거절합니다.")));
         

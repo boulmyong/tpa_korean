@@ -3,6 +3,7 @@ package com.tpasystem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -13,9 +14,15 @@ public class TPAManager {
     private final TPASystem plugin;
     private final HashMap<UUID, TPARequest> requests = new HashMap<>();
     private final HashMap<UUID, Long> cooldowns = new HashMap<>();
+    private BukkitTask expirationTask;
 
-    public TPAManager(TPASystem plugin) {
+    private final int requestExpirationSeconds;
+    private final int commandCooldownSeconds;
+
+    public TPAManager(TPASystem plugin, int requestExpirationSeconds, int commandCooldownSeconds) {
         this.plugin = plugin;
+        this.requestExpirationSeconds = requestExpirationSeconds;
+        this.commandCooldownSeconds = commandCooldownSeconds;
         startExpirationTask();
     }
 
@@ -40,17 +47,17 @@ public class TPAManager {
         if (!cooldowns.containsKey(player.getUniqueId())) {
             return 0;
         }
-        long timeLeft = (cooldowns.get(player.getUniqueId()) + TimeUnit.SECONDS.toMillis(30)) - System.currentTimeMillis();
+        long timeLeft = (cooldowns.get(player.getUniqueId()) + TimeUnit.SECONDS.toMillis(commandCooldownSeconds)) - System.currentTimeMillis();
         return Math.max(0, TimeUnit.MILLISECONDS.toSeconds(timeLeft));
     }
 
     private void startExpirationTask() {
-        new BukkitRunnable() {
+        expirationTask = new BukkitRunnable() {
             @Override
             public void run() {
                 requests.entrySet().removeIf(entry -> {
                     TPARequest request = entry.getValue();
-                    if (System.currentTimeMillis() - request.getRequestTime() > TimeUnit.SECONDS.toMillis(60)) {
+                    if (System.currentTimeMillis() - request.getRequestTime() > TimeUnit.SECONDS.toMillis(requestExpirationSeconds)) {
                         Player requester = request.getRequester();
                         Player target = request.getTarget();
                         if (requester != null && requester.isOnline()) {
@@ -65,5 +72,32 @@ public class TPAManager {
                 });
             }
         }.runTaskTimer(plugin, 20, 20);
+    }
+
+    public void cancelTasks() {
+        if (expirationTask != null) {
+            expirationTask.cancel();
+        }
+    }
+
+    public void handlePlayerQuit(Player player) {
+        UUID playerUUID = player.getUniqueId();
+        cooldowns.remove(playerUUID);
+
+        // Player was the target of a request
+        removeRequest(playerUUID);
+
+        // Player was the requester
+        requests.entrySet().removeIf(entry -> {
+            TPARequest request = entry.getValue();
+            if (request.getRequester().getUniqueId().equals(playerUUID)) {
+                Player target = request.getTarget();
+                if (target != null && target.isOnline()) {
+                    target.sendMessage(ChatColor.RED + "[TPA] " + ChatColor.WHITE + player.getName() + "님이 서버를 나가셔서 텔레포트 요청이 취소되었습니다.");
+                }
+                return true;
+            }
+            return false;
+        });
     }
 }
