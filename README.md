@@ -30,5 +30,5 @@ Spigot/Paper 서버용 텔레포트 요청(TPA) 관리 플러그인입니다.
 
 ## 설치
 
-1. `TPASystem-1.2.jar` 파일을 서버의 `plugins` 폴더로 옮깁니다.
+1. [TPASystem-1.2.jar](https://github.com/boulmyong/tpa_korean/releases/download/v1.2/TPASystem-1.2.jar) 파일을 서버의 `plugins` 폴더로 옮깁니다.
 2. 서버를 시작하거나 리로드합니다.
